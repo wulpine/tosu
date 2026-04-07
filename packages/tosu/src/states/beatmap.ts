@@ -619,7 +619,7 @@ export class BeatmapPP extends AbstractState {
                     break;
 
                 case 2:
-                    strainsAmount = this.diffStrains.movement.length || 0;
+                    strainsAmount = this.diffStrains.precision.length || 0;
                     break;
 
                 case 3:
@@ -670,7 +670,7 @@ export class BeatmapPP extends AbstractState {
                     // TODO:: remove aimNoSliders
                     updateWithOffset('aimNoSliders', new Float64Array());
                     updateWithOffset('flashlight', this.diffStrains.flashlight);
-                    updateWithOffset('speed', this.diffStrains.speed);
+                    updateWithOffset('speed', this.diffStrains.osuSpeed);
 
                     oldStrains = Array.from(this.diffStrains.aim);
                     break;
@@ -682,9 +682,10 @@ export class BeatmapPP extends AbstractState {
                     oldStrains = Array.from(this.diffStrains.color);
                     break;
                 case 2:
-                    updateWithOffset('movement', this.diffStrains.movement);
+                    updateWithOffset('precision', this.diffStrains.precision);
+                    updateWithOffset('speed', this.diffStrains.catchSpeed);
 
-                    oldStrains = Array.from(this.diffStrains.movement);
+                    oldStrains = Array.from(this.diffStrains.precision);
                     break;
                 case 3:
                     updateWithOffset('strains', this.diffStrains.strains);
