@@ -54,14 +54,7 @@ const convertMemoryPlayerToResult = (
     score: memoryPlayer.score,
     accuracy: memoryPlayer.accuracy,
 
-    hits: {
-        300: memoryPlayer.statistics.great,
-        geki: memoryPlayer.statistics.perfect,
-        100: memoryPlayer.statistics.ok,
-        katu: memoryPlayer.statistics.good,
-        50: memoryPlayer.statistics.meh,
-        0: memoryPlayer.statistics.miss
-    },
+    hits: toLegacyHits(gameMode, memoryPlayer.statistics),
 
     combo: {
         current: memoryPlayer.combo,
@@ -380,17 +373,7 @@ export const buildResult = (instanceManager: InstanceManager): ApiAnswer => {
             accuracy: resultScreen.accuracy,
 
             name: resultScreen.playerName, // legacy, remove it later
-            hits: {
-                300: resultScreen.statistics.great,
-                geki: resultScreen.statistics.perfect,
-                100: resultScreen.statistics.ok,
-                katu: resultScreen.statistics.good,
-                50: resultScreen.statistics.meh,
-                0: resultScreen.statistics.miss,
-                sliderEndHits: resultScreen.statistics.sliderTailHit || 0,
-                smallTickHits: resultScreen.statistics.smallTickHit || 0,
-                largeTickHits: resultScreen.statistics.largeTickHit || 0
-            },
+            hits: toLegacyHits(resultScreen.mode, resultScreen.statistics),
             mods: {
                 checksum: resultScreen.mods.checksum,
                 number: resultScreen.mods.number,
@@ -908,16 +891,8 @@ function buildPlay(
         },
 
         hits: {
-            300: gameplay.statistics.great,
-            geki: gameplay.statistics.perfect,
-            100: gameplay.statistics.ok,
-            katu: gameplay.statistics.good,
-            50: gameplay.statistics.meh,
-            0: gameplay.statistics.miss,
-            sliderBreaks: gameplay.hitSB,
-            sliderEndHits: gameplay.statistics.sliderTailHit || 0,
-            smallTickHits: gameplay.statistics.smallTickHit || 0,
-            largeTickHits: gameplay.statistics.largeTickHit || 0
+            ...toLegacyHits(gameplay.mode, gameplay.statistics),
+            sliderBreaks: gameplay.hitSB
         },
 
         hitErrorArray: gameplay.hitErrors,

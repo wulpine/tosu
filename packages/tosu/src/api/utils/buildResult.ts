@@ -68,7 +68,6 @@ export const buildResult = (instanceManager: InstanceManager): ApiAnswer => {
               ? resultScreen.mods
               : global.menuMods;
 
-    const hits = toLegacyHits(gameplay.mode, gameplay.statistics);
     return {
         client: ClientType[osuInstance.client],
         settings: {
@@ -174,7 +173,7 @@ export const buildResult = (instanceManager: InstanceManager): ApiAnswer => {
                 smooth: gameplay.playerHPSmooth
             },
             hits: {
-                ...hits,
+                ...toLegacyHits(gameplay.mode, gameplay.statistics),
                 sliderBreaks: gameplay.hitSB,
                 grade: {
                     current: gameplay.gradeCurrent,
@@ -228,12 +227,7 @@ export const buildResult = (instanceManager: InstanceManager): ApiAnswer => {
                 num: resultScreen.mods.number,
                 str: resultScreen.mods.name
             },
-            300: resultScreen.statistics.great,
-            geki: resultScreen.statistics.perfect,
-            100: resultScreen.statistics.ok,
-            katu: resultScreen.statistics.good,
-            50: resultScreen.statistics.meh,
-            0: resultScreen.statistics.miss,
+            ...toLegacyHits(resultScreen.mode, resultScreen.statistics),
             grade: resultScreen.grade,
             createdAt: resultScreen.date
         },
@@ -482,12 +476,7 @@ const buildTourneyData = (
                         smooth: gameplay.playerHPSmooth
                     },
                     hits: {
-                        300: gameplay.statistics.great,
-                        geki: gameplay.statistics.perfect,
-                        100: gameplay.statistics.ok,
-                        katu: gameplay.statistics.good,
-                        50: gameplay.statistics.meh,
-                        0: gameplay.statistics.miss,
+                        ...toLegacyHits(gameplay.mode, gameplay.statistics),
                         sliderBreaks: gameplay.hitSB,
                         grade: {
                             current: gameplay.gradeCurrent,
